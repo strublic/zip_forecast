@@ -16,7 +16,7 @@ module Geocoding
 
     def connection
       Faraday.new(url: BASE_URL) do |faraday|
-        faraday.headers['User-Agent'] = 'zip-forecast-assessment'
+        faraday.headers['User-Agent'] = 'zip-forecast-v1.0'
         faraday.options.timeout = 5
       end
     end
