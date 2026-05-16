@@ -8,8 +8,9 @@ class ForecastFetcher
   end
 
   def call
+    zip = Geocoding::AddressResolver.call(@address)
     {
-      zip: '90210',
+      zip: zip,
       current_temp: 22,
       high: 26,
       low: 18,
