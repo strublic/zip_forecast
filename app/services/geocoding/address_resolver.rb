@@ -11,14 +11,14 @@ module Geocoding
 
     def call
       result = @client.search(@address).first
-
-      raise 'Address not found' unless result
+      raise InvalidAddressError, 'Address could not be resolved' unless result
 
       zip = result.dig('address', 'postcode')
-
-      raise 'ZIP code not found' if zip.blank?
+      raise ZipCodeNotFoundError, 'ZIP code not found for the provided address' if zip.blank?
 
       zip
+    rescue Faraday::TimeoutError, Faraday::ConnectionFailed => e
+      raise ExternalServiceError, e.message
     end
   end
 end

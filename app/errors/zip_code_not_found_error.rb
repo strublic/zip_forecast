@@ -1,0 +1,1 @@
+class ZipCodeNotFoundError < StandardError; end

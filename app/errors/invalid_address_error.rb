@@ -1,0 +1,1 @@
+class InvalidAddressError < StandardError; end

@@ -1,3 +1,8 @@
+<% if @error.present? %>
+  <div>
+    <%= @error %>
+  </div>
+<% end %>
 <h1>Zip Forecast</h1>
 
 <%= form_with scope: :forecast, url: forecasts_path, data: { turbo: false } do |form| %>

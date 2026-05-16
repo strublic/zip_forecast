@@ -10,8 +10,11 @@ module Weather
         req.params['aqi'] = 'no'
         req.params['alerts'] = 'no'
       end
+      raise ExternalServiceError, 'Weather API request failed' unless response.success?
 
       JSON.parse(response.body)
+    rescue Faraday::TimeoutError, Faraday::ConnectionFailed => e
+      raise ExternalServiceError, e.message
     end
 
     private
