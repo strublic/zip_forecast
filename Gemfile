@@ -46,7 +46,6 @@ gem "bootsnap", require: false
 
 gem 'faraday'
 gem 'geocoder'
-gem 'dotenv-rails'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -56,6 +55,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'dotenv-rails'
   gem 'brakeman', require: false
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
