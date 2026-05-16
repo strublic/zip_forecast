@@ -67,8 +67,6 @@ RSpec.describe ForecastFetcher do
       }
 
       allow(Geocoding::AddressResolver).to receive(:call).and_return(zip)
-                                                         .to receive(:call)
-        .and_return(zip)
 
       Rails.cache.write("forecast:#{zip}", cached_data)
 
@@ -76,6 +74,36 @@ RSpec.describe ForecastFetcher do
 
       expect(result[:from_cache]).to eq(true)
       expect(result[:zip]).to eq(zip)
+    end
+
+    it 'propagates invalid address errors' do
+      allow(Geocoding::AddressResolver)
+        .to receive(:call)
+        .and_raise(InvalidAddressError)
+
+      expect do
+        described_class.call(address)
+      end.to raise_error(InvalidAddressError)
+    end
+
+    it 'propagates weather API failures' do
+      allow(Geocoding::AddressResolver)
+        .to receive(:call)
+        .and_return(zip)
+
+      weather_client = instance_double(Weather::Client)
+
+      allow(Weather::Client)
+        .to receive(:new)
+        .and_return(weather_client)
+
+      allow(weather_client)
+        .to receive(:current)
+        .and_raise(ExternalServiceError)
+
+      expect do
+        described_class.call(address)
+      end.to raise_error(ExternalServiceError)
     end
   end
 end
