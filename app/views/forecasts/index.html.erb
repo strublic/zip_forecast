@@ -1,2 +1,33 @@
 <h1>Zip Forecast</h1>
-<p>Weather forecast by address lookup</p>
+
+<%= form_with scope: :forecast, url: forecasts_path, data: { turbo: false } do |form| %>
+
+  <div>
+    <%= form.label :address, "Enter address" %>
+  </div>
+
+  <div>
+    <%= form.text_field :address, required: true %>
+  </div>
+
+  <div>
+    <%= form.submit "Get Forecast" %>
+  </div>
+<% end %>
+
+<% if @forecast.present? %>
+  <hr>
+
+  <h2>Forecast for ZIP <%= @forecast[:zip] %></h2>
+
+  <p>Current: <%= @forecast[:current_temp] %>°C</p>
+  <p>High: <%= @forecast[:high] %>°C</p>
+  <p>Low: <%= @forecast[:low] %>°C</p>
+  <p>Condition: <%= @forecast[:condition] %></p>
+
+  <% if @forecast[:from_cache] %>
+    <p>Served from cache</p>
+  <% else %>
+    <p>Fresh result</p>
+  <% end %>
+<% end %>
