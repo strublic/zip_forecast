@@ -79,6 +79,4 @@ test:
 #
 production:
   <<: *default
-  database: zip_forecast_production
-  username: zip_forecast_user
-  password: <%= ENV["ZIP_FORECAST_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
