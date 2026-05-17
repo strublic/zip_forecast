@@ -1,38 +1,60 @@
-<% if @error.present? %>
-  <div>
-    <%= @error %>
+<div class="page-container">
+  <div class="card">
+    <h1>Zip Forecast</h1>
+    <p class="subtitle">
+      Weather forecast lookup by address
+    </p>
+
+    <% if @error.present? %>
+      <div class="error-box">
+        <%= @error %>
+      </div>
+    <% end %>
+
+    <%= form_with scope: :forecast, url: forecasts_path, data: { turbo: false } do |form| %>
+      <div class="form-group">
+        <%= form.text_field :address,
+          placeholder: "Enter an address",
+          required: true %>
+      </div>
+
+      <%= form.submit "Get Forecast" %>
+    <% end %>
+
+    <% if @forecast.present? %>
+      <div class="result-card">
+        <h2>Forecast for ZIP: <%= @forecast[:zip] %></h2>
+
+        <div class="metric">
+          <span>Current Temperature</span>
+          <strong><%= @forecast[:current_temp] %>°C</strong>
+        </div>
+
+        <div class="metric">
+          <span>High</span>
+          <strong><%= @forecast[:high] %>°C</strong>
+        </div>
+
+        <div class="metric">
+          <span>Low</span>
+          <strong><%= @forecast[:low] %>°C</strong>
+        </div>
+
+        <div class="metric">
+          <span>Condition</span>
+          <strong><%= @forecast[:condition] %></strong>
+        </div>
+
+        <% if @forecast[:from_cache] %>
+          <div class="badge badge-cache">
+            Served from cache
+          </div>
+        <% else %>
+          <div class="badge badge-fresh">
+            Fresh result
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-<% end %>
-<h1>Zip Forecast</h1>
-
-<%= form_with scope: :forecast, url: forecasts_path, data: { turbo: false } do |form| %>
-
-  <div>
-    <%= form.label :address, "Enter address" %>
-  </div>
-
-  <div>
-    <%= form.text_field :address, required: true %>
-  </div>
-
-  <div>
-    <%= form.submit "Get Forecast" %>
-  </div>
-<% end %>
-
-<% if @forecast.present? %>
-  <hr>
-
-  <h2>Forecast for ZIP: <%= @forecast[:zip] %></h2>
-
-  <p>Current: <%= @forecast[:current_temp] %>°C</p>
-  <p>High: <%= @forecast[:high] %>°C</p>
-  <p>Low: <%= @forecast[:low] %>°C</p>
-  <p>Condition: <%= @forecast[:condition] %></p>
-
-  <% if @forecast[:from_cache] %>
-    <p>Served from cache</p>
-  <% else %>
-    <p>Fresh result</p>
-  <% end %>
-<% end %>
+</div>
