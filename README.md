@@ -53,8 +53,6 @@ Extracts ZIP/postal code from geocoding responses.
 Responsible for HTTP communication with the weather provider.
 
 ---
-### Live Demo: https://zip-forecast-6rup.onrender.com/
-Note: Cache behavior in the live demo may occasionally reset due to hosting platform restarts (free plan)
 
 ## Setup
 
