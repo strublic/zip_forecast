@@ -23,7 +23,7 @@ A Ruby on Rails application that accepts an address, resolves its ZIP/postal cod
 
 - Ruby 3.2.5
 - Rails 7.1.5
-- PostgreSQL 12.22
+- PostgreSQL
 - Faraday
 - RSpec
 - Rails Memory Cache
@@ -53,6 +53,8 @@ Extracts ZIP/postal code from geocoding responses.
 Responsible for HTTP communication with the weather provider.
 
 ---
+## Live Demo: https://zip-forecast-6rup.onrender.com/
+#  Note: Cache behavior in the live demo may occasionally reset due to hosting platform restarts (free plan)
 
 ## Setup
 
