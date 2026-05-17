@@ -53,8 +53,8 @@ Extracts ZIP/postal code from geocoding responses.
 Responsible for HTTP communication with the weather provider.
 
 ---
-## Live Demo: https://zip-forecast-6rup.onrender.com/
-#  Note: Cache behavior in the live demo may occasionally reset due to hosting platform restarts (free plan)
+### Live Demo: https://zip-forecast-6rup.onrender.com/
+Note: Cache behavior in the live demo may occasionally reset due to hosting platform restarts (free plan)
 
 ## Setup
 
@@ -165,18 +165,41 @@ User-friendly messages are displayed instead of generic server errors.
 
 ### Why explicit HTTP clients instead of gems?
 Using explicit Faraday clients provides:
-- better control over timeouts
+- explicit timeout handling
 - clearer error handling
 - explicit API integration logic
 - easier debugging
+- simpler response normalization
 
 ### Why Rails memory cache?
-Chosen for simplicity and alignment with assessment scope.
+Chosen as a lightweight caching solution to minimize infrastructure complexity.
 
 A production implementation would likely use Redis.
 
+### Why explicit geocoding integration?
+An explicit integration with OpenStreetMap's Nominatim API via Faraday was chosen over higher-level abstractions to provide better control, reliability, and clearer error handling.
+
+This approach provides:
+- full control over request configuration
+- explicit timeout handling
+- predictable response parsing
+- clearer debugging when external services behave unexpectedly
+
+### Why WeatherAPI?
+WeatherAPI offers:
+- simple integration
+- reliable ZIP/postal code forecast lookup
+- clean response structure
+- forecast and current weather support in a single endpoint
+
+### Why ZIP-based caching?
+Caching is performed by ZIP/postal code rather than raw address input because:
+- multiple address variations can resolve to the same ZIP code
+- it reduces unnecessary external API calls
+- it aligns with the forecast lookup strategy
+
 ### Why no database persistence?
-The assessment requirements do not require historical storage or user data persistence.
+This project does not require historical storage or persistence of user data.
 
 PostgreSQL is used only as the Rails application database dependency.
 
